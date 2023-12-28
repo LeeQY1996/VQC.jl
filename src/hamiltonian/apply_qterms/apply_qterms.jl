@@ -1,6 +1,7 @@
 include("short_range_serial.jl")
 include("short_range_threaded.jl")
 include("long_range_threaded.jl")
+include("dm_apply_qterms.jl")
 
 
 function (m::QubitsTerm)(vr::StateVector)
