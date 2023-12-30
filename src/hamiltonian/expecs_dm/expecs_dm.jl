@@ -1,6 +1,5 @@
 
 include("expec_dm_serial.jl")
-include("apply_qterms_dm.jl")
 
 
 

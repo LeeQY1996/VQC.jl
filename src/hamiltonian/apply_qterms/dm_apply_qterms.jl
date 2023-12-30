@@ -33,18 +33,18 @@ const LARGEST_SUPPORTED_NTERMS = 5
 
 function _dm_apply_qterm_util!(m::QubitsTerm, v::AbstractVector, vout::AbstractVector, n::Int)
 	tmp = coeff(m)
-	@. vout = tmp * v
+	@. vout = tmp^2 * v
 	if length(v) >= 32
 		for (pos, mat) in zip(positions(m), oplist(m))
 			_apply_gate_threaded2!(pos, mat, vout)
-			_apply_gate_threaded2!(Tuple(pos.+n), conj(mat), vout)
+			_apply_gate_threaded2!(Tuple(pos.+n), -mat, vout)
 		end	
 	else    
 		for (pos, mat) in zip(positions(m), oplist(m))
 			_apply_gate_2!(pos, mat, vout)
-			_apply_gate_2!(Tuple(pos.+n), conj(mat), vout)
+			_apply_gate_2!(Tuple(pos.+n), -mat, vout)
 		end			
-	end
+	end 
 end
 
 
@@ -60,7 +60,7 @@ end
 function _dm_apply_serial_util!(m::QubitsOperator, v::AbstractVector, vout::AbstractVector, n::Int)
     for (k, bond) in m.data
         _apply_gate_2!(k, _get_mat(length(k), bond), v, vout)
-		_apply_gate_2!(Tuple(k.+n), conj(_get_mat(length(k), bond)), v, vout)
+		_apply_gate_2!(Tuple(k.+n), -_get_mat(length(k), bond), v, vout)
     end
     return vout
 end
@@ -68,7 +68,7 @@ end
 function _dm_apply_threaded_util!(m::QubitsOperator, v::AbstractVector, vout::AbstractVector, n::Int)
     for (k, bond) in m.data
         _apply_gate_threaded2!(k, _get_mat(length(k), bond), v, vout)
-		_apply_gate_threaded2!(Tuple(k.+n), conj(_get_mat(length(k), bond)), v, vout)
+		_apply_gate_threaded2!(Tuple(k.+n), -_get_mat(length(k), bond), v, vout)
     end
     return vout
 end
