@@ -56,15 +56,15 @@ cnorm(x::AbstractVector) = sqrt(dot(x, x))
 
 @adjoint _apply_throw_impl(x::QSelect, qstate::StateVector) = _apply_throw_impl(x, qstate), z -> begin
     if x.state == 0
-        m = kron(z, ZERO)
+        m = StateVector(kron(storage(z), ZERO))
     else
-    	m = kron(z, ONE)
+    	m = StateVector(kron(storage(z), ONE))
     end
-    swap!(m, 1, x.position)
+    swap!(storage(m), 1, x.position)
     return (nothing, m)
 end
 
-@adjoint _apply_keep_impl(x::QSelect, qstate::StateVector) = _apply_keep_impl(x, qstate), z -> (nothing, storage(_apply_keep_impl(x, StateVector(z, nqubits(qstate))) ))
+@adjoint _apply_keep_impl(x::QSelect, qstate::StateVector) = _apply_keep_impl(x, qstate), z -> (nothing, _apply_keep_impl(x, StateVector(z, nqubits(qstate))) )
 
 @adjoint _apply_impl(x::QSelect, qstate::StateVector; keep::Bool) = begin
 	return keep ? Zygote.pullback(_apply_keep_impl, x, qstate) : Zygote.pullback(_apply_throw_impl, x, qstate)

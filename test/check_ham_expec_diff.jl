@@ -6,7 +6,7 @@ function check_ham_term_grad(::Type{T}, L) where T
 	loss(x) = abs(expectation(m, x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, state)[1]
+	grad1 = storage(gradient(loss, state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
@@ -18,7 +18,7 @@ function check_ham_expec_grad(::Type{T}, L) where T
 	loss(x) = abs(expectation(m, x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, state)[1]
+	grad1 = storage(gradient(loss, state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
@@ -30,7 +30,7 @@ function check_qterm_expec_grad_long(::Type{T}, L, n) where T
 	loss(x) = abs(expectation(m, x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, state)[1]
+	grad1 = storage(gradient(loss, state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
@@ -42,7 +42,7 @@ function check_ham_expec_grad_long(::Type{T}, L, n) where T
 	loss(x) = abs(expectation(m, x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, state)[1]
+	grad1 = storage(gradient(loss, state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
