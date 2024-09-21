@@ -1,6 +1,7 @@
 
 
 @adjoint storage(x::Union{StateVector, DensityMatrix}) = storage(x), z -> (z,)
+@adjoint nqubits(x::Union{StateVector, DensityMatrix}) = nqubits(x), z -> (nothing,)
 @adjoint StateVector(data::AbstractVector{<:Number}, n::Int) = StateVector(data, n), z -> (z, nothing)
 @adjoint StateVector(data::AbstractVector{<:Number}) = StateVector(data), z -> (z,)
 @adjoint DensityMatrix(data::AbstractMatrix{<:Number}, n::Int) = DensityMatrix(data, n), z -> (z, nothing)
@@ -14,6 +15,6 @@
 # 	end
 # end
 
-# this is stupid, why should I need it
-@adjoint dot(x::StateVector, y::StateVector) = Zygote.pullback(dot, storage(x), storage(y))
+# # this is stupid, why should I need it
+# @adjoint dot(x::StateVector, y::StateVector) = Zygote.pullback(dot, storage(x), storage(y))
 
