@@ -4,9 +4,9 @@
 
 VQC support variational hamiltonian evolutions.
 
-```@docs
+<!-- ```@docs
 ctrlham(a::AbstractMatrix, b::Vector{<:AbstractMatrix}, nparas::Int)
-```
+``` -->
 
 The variational hamiltonian object can be used in the same way as a variational quantum circuit
 ```@example

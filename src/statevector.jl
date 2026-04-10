@@ -100,6 +100,31 @@ function qubit_encoding(::Type{T}, i::AbstractVector{<:Real}) where {T <: Number
 end  
 qubit_encoding(mpsstr::AbstractVector{<:Real}) = qubit_encoding(ComplexF64, mpsstr)
 
+"""
+    qstate(::Type{T}, thetas::AbstractVector{<:Real}) where {T <: Number}
+Return a product quantum state of [[cos(pi*theta/2), sin(pi*theta/2)]] for theta in thetas.
+Example: qstate(Complex{Float64}, [0.5, 0.7])
+"""
+qstate(::Type{T}, thetas::AbstractVector{<:Real}) where {T <: Number} = qubit_encoding(T, thetas)
+
+"""
+    qstate(thetas::AbstractVector{<:Real})
+Return a product quantum state of [[cos(pi*theta/2), sin(pi*theta/2)]] for theta in thetas.
+"""
+qstate(thetas::AbstractVector{<:Real}) = qubit_encoding(ComplexF64, thetas)
+
+"""
+    qstate(::Type{T}, n::Int) where {T <: Number}
+Return a zero quantum state with n qubits.
+"""
+qstate(::Type{T}, n::Int) where {T <: Number} = StateVector(T, n)
+
+"""
+    qstate(n::Int)
+Return a zero quantum state with n qubits.
+"""
+qstate(n::Int) = StateVector(ComplexF64, n)
+
 function amplitude_encoding(::Type{T}, v::AbstractVector{<:Number}; nqubits::Int=ceil(Int, log2(length(v)))) where {T<:Number}
     vn = norm(v)
     (vn ≈ 1.) || println("input vector is not normalized, it will be renormalized as a quantum state.")
@@ -143,7 +168,13 @@ function reset_qubit!(x::StateVector, i::AbstractVector{<:Real})
     return x
 end
 
-function amplitude(s::StateVector, i::AbstractVector{Int}; scaling::Real=sqrt(2))
+"""
+    amplitude(s::StateVector, i::AbstractVector{Int}; scaling::Real=√2)
+Return the amplitude of a quantum state at a specific computational basis state.
+
+The `scaling` parameter is used to scale the amplitude by a factor of `scaling^nqubits(s)`.
+"""
+function amplitude(s::StateVector, i::AbstractVector{Int}; scaling::Real=√2)
     @assert length(i)==nqubits(s)
     idx = _sub2ind(i)
     return scaling==1 ? s[idx] : s[idx] * scaling^(nqubits(s))

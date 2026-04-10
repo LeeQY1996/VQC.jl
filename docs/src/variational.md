@@ -41,9 +41,9 @@ initial_state = qstate(L)
 loss(c) = distance(target_state, c * initial_state)
 grad = gradient(loss, circuit)
 ```
-The above definition has been predefined by the function variational_circuit
+The above definition has been predefined by the function variational_circuit_1d
 ```@docs
-variational_circuit(L::Int, depth::Int, g::Function=rand)
+variational_circuit_1d(L::Int, depth::Int; θs::Vector{<:Real}=rand(_nparas(ComplexF64, L, depth)) .* 2π)
 ```
 
 ## A simple application of VQC and Flux
@@ -52,7 +52,7 @@ using VQC
 using Zygote
 using Flux.Optimise
 
-circuit = variational_circuit(3, 2)
+circuit = variational_circuit_1d(3, 2)
 target_state = (sqrt(2)/2) *  (qstate([1,1,1]) + qstate([0,0,0]))
 initial_state = qstate([0,0,0])
 loss(c) = distance(target_state, c * initial_state)
@@ -69,11 +69,12 @@ end
 ```
 
 ## Some utility functions
-```@docs
-collect_variables(args...)
-parameters(args...)
-set_parameters!(coeff::AbstractVector{<:Number}, args...)
-simple_gradient(f, args...; dt::Real=1.0e-6)
-check_gradient(f, args...; dt::Real=1.0e-6, atol::Real=1.0e-4, verbose::Int=0)
-```
+
+<!-- These utility functions are available in the test suite but not exported by default:
+- `collect_variables(args...)` - collect all variables from a nested structure
+- `parameters(args...)` - extract all parameters from a circuit
+- `set_parameters!(coeff::AbstractVector{<:Number}, args...)` - set parameters of a circuit
+- `simple_gradient(f, args...; dt::Real=1.0e-6)` - compute gradient using finite differences
+- `check_gradient(f, args...; dt::Real=1.0e-6, atol::Real=1.0e-4, verbose::Int=0)` - check gradient correctness
+-->
 

@@ -5,3 +5,5 @@ result/
 *.json
 *.txt
 docs/build/
+Manifest.toml
+docs/Manifest.toml
