@@ -1,0 +1,27 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        julia-version: ['1.6', '1.8', '1.9', '1.12']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Julia ${{ matrix.julia-version }}
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: ${{ matrix.julia-version }}
+      - name: Clone QuantumCircuits
+        run: |
+          cd ..
+          git clone --depth 1 https://github.com/LeeQY1996/QuantumCircuits.git
+      - name: Install dependencies
+        run: |
+          julia --project=. -e '
+            using Pkg
+            Pkg.develop(PackageSpec(path="../QuantumCircuits"))
+            Pkg.instantiate()
+          '
+      - name: Run tests
+        run: julia --project=. -e 'using Pkg; Pkg.test()'

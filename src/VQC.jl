@@ -10,14 +10,17 @@ using QuantumCircuits: permute
 # import LinearAlgebra, QuantumCircuits
 
 # Re-export commonly used functions from QuantumCircuits
-using QuantumCircuits: spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable, gate
+# Note: spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable are not defined
+# using QuantumCircuits: gate  # gate may exist, but commented out for now
 
 # Re-export common gates from QuantumCircuits.Gates
-using QuantumCircuits.Gates: H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz, U1, U2, U3
-using QuantumCircuits.Gates: HGate, XGate, YGate, ZGate, SGate, TGate, CNOTGate, CZGate, SWAPGate, RxGate, RyGate, RzGate, CRxGate, CRyGate, CRzGate
+using QuantumCircuits.Gates: H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz
+# U1, U2, U3 may not exist in QuantumCircuits.Gates
+# Gate types are exported from QuantumCircuits, not QuantumCircuits.Gates
+# using QuantumCircuits.Gates: HGate, XGate, YGate, ZGate, SGate, TGate, CNOTGate, CZGate, SWAPGate, RxGate, RyGate, RzGate, CRxGate, CRyGate, CRzGate
 
 # Re-export functions from Utilities module
-using .Utilities: variational_circuit_1d, real_variational_circuit_1d
+# using .Utilities: variational_circuit_1d, real_variational_circuit_1d  # Moved after include
 
 # using KrylovKit: exponentiate
 # using SparseArrays: spzeros, sparse, SparseMatrixCSC
@@ -36,11 +39,13 @@ export schmidt_numbers, renyi_entropy
 export QCircuit
 
 # Common quantum gates
-export H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz, U1, U2, U3
+export H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz
+# U1, U2, U3 may not be available
 export HGate, XGate, YGate, ZGate, SGate, TGate, CNOTGate, CZGate, SWAPGate, RxGate, RyGate, RzGate, CRxGate, CRyGate, CRzGate
 
 # Hamiltonian and operator functions
-export spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable, gate
+# Note: spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable are not defined
+# export gate  # gate may exist, but commented out for now
 
 # utility functions
 export variational_circuit_1d, real_variational_circuit_1d
@@ -103,6 +108,9 @@ include("ptrace.jl")
 
 # utility functions
 include("utility/utility.jl")
+
+# Import functions from Utilities module after it's defined
+import .Utilities: variational_circuit_1d, real_variational_circuit_1d
 
 
 end
