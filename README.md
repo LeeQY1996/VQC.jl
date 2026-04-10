@@ -1,7 +1,7 @@
 # VQC.jl
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://guochu.github.io/VQC.jl/dev/)
+[![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://leeQY1996.github.io/VQC.jl/)
 
 VQC.jl is a Julia framework for simulating variational quantum circuits and quantum machine learning tasks. It provides a differentiable programming interface for quantum circuits, enabling seamless integration with classical machine learning libraries like Flux.
 
@@ -31,7 +31,7 @@ julia> Pkg.add("VQC")
 Alternatively, you can install the development version directly from GitHub:
 
 ```julia
-julia> Pkg.add(url="https://github.com/guochu/VQC.jl")
+julia> Pkg.add(url="https://github.com/LeeQY1996/VQC.jl")
 ```
 
 ## Quick Start
@@ -109,13 +109,23 @@ state = apply(ham, 0.5, state)
 
 ## Documentation
 
-For detailed documentation, including API reference and tutorials, please visit the [official documentation](https://guochu.github.io/VQC.jl/dev/).
+For detailed documentation, including API reference and tutorials, please visit the [official documentation](https://leeQY1996.github.io/VQC.jl/).
 
 You can also build the documentation locally:
 
 ```bash
 julia docs/make.jl
 ```
+
+### Setting up GitHub Pages
+
+The documentation is automatically deployed to GitHub Pages via GitHub Actions. To enable this:
+
+1. Go to your repository on GitHub: https://github.com/LeeQY1996/VQC.jl
+2. Navigate to **Settings** → **Pages**
+3. Under **Source**, select **GitHub Actions**
+
+The GitHub Actions workflow (`.github/workflows/documenter.yml`) will automatically build and deploy the documentation to `https://leeQY1996.github.io/VQC.jl/` on every push to the `master` branch.
 
 ## Dependencies
 
@@ -127,7 +137,7 @@ VQC.jl depends on the following packages:
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues on [GitHub](https://github.com/guochu/VQC.jl).
+Contributions are welcome! Please feel free to submit pull requests or open issues on [GitHub](https://github.com/LeeQY1996/VQC.jl).
 
 ## License
 
@@ -142,7 +152,7 @@ If you use VQC.jl in your research, please consider citing:
   author = {Guo Chu},
   title = {VQC.jl: A Variational Quantum Circuit Framework in Julia},
   year = {2023},
-  url = {https://github.com/guochu/VQC.jl}
+  url = {https://github.com/LeeQY1996/VQC.jl}
 }
 ```
 
