@@ -9,6 +9,7 @@ ctrlham(a::AbstractMatrix, b::Vector{<:AbstractMatrix}, nparas::Int)
 ``` -->
 
 The variational hamiltonian object can be used in the same way as a variational quantum circuit
+<!-- Example commented out because ctrlham function is not available
 ```@example
 push!(LOAD_PATH, "../../src")
 using VQC
@@ -33,3 +34,4 @@ grad = gradient(loss, h)
 # Check the gradient
 check_gradient(loss, h)
 ```
+-->
