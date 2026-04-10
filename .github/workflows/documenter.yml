@@ -28,7 +28,6 @@ jobs:
         run: |
           julia --project=. -e '
             using Pkg
-            Pkg.activate(".")
             Pkg.develop(PackageSpec(path="../QuantumCircuits.jl"))
             Pkg.instantiate()
             Pkg.add("Documenter")
