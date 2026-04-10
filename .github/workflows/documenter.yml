@@ -23,7 +23,9 @@ jobs:
         run: |
           julia --project=. -e '
             using Pkg
-            Pkg.instantiate(; target="docs")
+            Pkg.activate(".")
+            Pkg.instantiate()
+            Pkg.add("Documenter")
           '
 
       - name: Build and deploy documentation
