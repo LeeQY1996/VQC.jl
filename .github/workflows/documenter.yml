@@ -20,11 +20,9 @@ jobs:
           version: '1.6'
 
       - name: Clone QuantumCircuits dependency
-        env:
-          GIT_TERMINAL_PROMPT: 0
         run: |
           cd ..
-          git clone --depth 1 https://github.com/guochu/QuantumCircuits.jl.git
+          git clone --depth 1 https://x-access-token:${{ github.token }}@github.com/guochu/QuantumCircuits.jl.git
 
       - name: Install dependencies
         run: |
