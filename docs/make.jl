@@ -17,3 +17,12 @@ makedocs(
         prettyurls = get(ENV, "CI", nothing) == "true"
     )
 )
+
+# Deploy documentation to GitHub Pages
+if get(ENV, "CI", nothing) == "true"
+    deploydocs(
+        repo = "github.com/LeeQY1996/VQC.jl.git",
+        devbranch = "master",
+        push_preview = true,
+    )
+end
