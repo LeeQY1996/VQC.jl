@@ -20,10 +20,16 @@ jobs:
           version: '1.6'
 
       - name: Install dependencies
-        run: julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+        run: |
+          julia --project=. -e '
+            using Pkg
+            Pkg.develop(PackageSpec(path=pwd()))
+            Pkg.instantiate()
+            Pkg.add("Documenter")
+          '
 
       - name: Build and deploy documentation
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCUMENTER_DEBUG: true
-        run: julia --project=docs docs/make.jl
+        run: julia --project=. docs/make.jl
