@@ -19,11 +19,17 @@ jobs:
         with:
           version: '1.6'
 
+      - name: Clone QuantumCircuits dependency
+        run: |
+          cd ..
+          git clone https://github.com/guochu/QuantumCircuits.jl.git
+
       - name: Install dependencies
         run: |
           julia --project=. -e '
             using Pkg
             Pkg.activate(".")
+            Pkg.develop(PackageSpec(path="../QuantumCircuits"))
             Pkg.instantiate()
             Pkg.add("Documenter")
           '
