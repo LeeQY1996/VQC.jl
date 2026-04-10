@@ -33,7 +33,7 @@ qstate(n::Int)
 To extract amplitudes from a quantum state:
 
 ```@docs
-amplitude(s::StateVector, i::AbstractVector{Int}) 
+amplitude(s::StateVector, i::AbstractVector{Int}; scaling::Real=√2) 
 amplitudes(s::StateVector)
 ```
 

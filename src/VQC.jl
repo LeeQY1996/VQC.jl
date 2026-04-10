@@ -9,6 +9,16 @@ using LinearAlgebra, StaticArrays, QuantumCircuits, QuantumCircuits.Gates
 using QuantumCircuits: permute
 # import LinearAlgebra, QuantumCircuits
 
+# Re-export commonly used functions from QuantumCircuits
+using QuantumCircuits: spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable
+
+# Re-export common gates from QuantumCircuits.Gates
+using QuantumCircuits.Gates: H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz, U1, U2, U3
+using QuantumCircuits.Gates: HGate, XGate, YGate, ZGate, SGate, TGate, CNOTGate, CZGate, SWAPGate, RxGate, RyGate, RzGate, CRxGate, CRyGate, CRzGate
+
+# Re-export functions from Utilities module
+using .Utilities: variational_circuit_1d, real_variational_circuit_1d
+
 # using KrylovKit: exponentiate
 # using SparseArrays: spzeros, sparse, SparseMatrixCSC
 # using Logging: @warn
@@ -21,6 +31,19 @@ export StateVector, DensityMatrix, distance, distance2, onehot_encoding, qubit_e
 export tr, dot, norm, normalize!, normalize, ishermitian
 export reset_qubit!, reset_onehot!, storage, fidelity, rand_state, rand_densitymatrix, permute
 export schmidt_numbers, renyi_entropy
+
+# circuit operations from QuantumCircuits
+export QCircuit
+
+# Common quantum gates
+export H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz, U1, U2, U3
+export HGate, XGate, YGate, ZGate, SGate, TGate, CNOTGate, CZGate, SWAPGate, RxGate, RyGate, RzGate, CRxGate, CRyGate, CRzGate
+
+# Hamiltonian and operator functions
+export spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable
+
+# utility functions
+export variational_circuit_1d, real_variational_circuit_1d
 
 # gate operations
 export apply!
