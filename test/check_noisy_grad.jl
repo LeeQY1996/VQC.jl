@@ -42,7 +42,7 @@ function check_ham_term_grad(::Type{T}, L) where T
 	loss(x) = abs(expectation(m, x))
 	loss_fd(θs) = loss(DensityMatrix(θs))
 
-	grad1 = gradient(loss, state)[1]
+	grad1 = storage(gradient(loss, state)[1])
 	grad2 = fdm_gradient(loss_fd, storage(state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end

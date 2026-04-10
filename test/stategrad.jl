@@ -10,7 +10,7 @@ function state_grad_dot_real(L::Int, depth::Int)
 	loss(x) = real(dot(target_state, circuit * x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, initial_state)[1]
+	grad1 = storage(gradient(loss, initial_state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(initial_state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
@@ -26,7 +26,7 @@ function state_grad_dot_imag(L::Int, depth::Int)
 	loss(x) = imag(dot(target_state, circuit * x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, initial_state)[1]
+	grad1 = storage(gradient(loss, initial_state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(initial_state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
@@ -42,7 +42,7 @@ function state_grad_dot_abs(L::Int, depth::Int)
 	loss(x) = abs(dot(target_state, circuit * x))
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, initial_state)[1]
+	grad1 = storage(gradient(loss, initial_state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(initial_state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end
@@ -58,7 +58,7 @@ function state_grad_distance(L::Int, depth::Int)
 	loss(x) = distance(target_state, circuit * x)
 	loss_fd(θs) = loss(StateVector(θs))
 
-	grad1 = gradient(loss, initial_state)[1]
+	grad1 = storage(gradient(loss, initial_state)[1])
 	grad2 = fdm_gradient(loss_fd, amplitudes(initial_state))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end

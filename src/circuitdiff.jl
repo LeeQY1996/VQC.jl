@@ -20,15 +20,14 @@ end
 #     T, v; kwargs...), z -> (nothing, z[1:length(v)])
 
 
-function back_propagate(Δ::AbstractVector, m::Gate, y::StateVector)
-    Δ = StateVector(Δ, nqubits(y))
+function back_propagate(Δ::StateVector, m::Gate, y::StateVector)
     Δ = apply!(m', Δ)
     y = apply!(m', y)
     ∇θs = nothing
     if nparameters(m) > 0
         ∇θs = [real(expectation(y, item, Δ)) for item in differentiate(m)]
     end
-    return storage(Δ), ∇θs, y
+    return Δ, ∇θs, y
 end
 
 # a temporary solution, which requires an additional copy of the density matrix
@@ -39,23 +38,21 @@ function expectation(x::DensityMatrix, m::Gate, y::DensityMatrix)
     return dot(storage(x)', storage(yc))
 end 
 
-function back_propagate(Δ::AbstractMatrix, m::Gate, y::DensityMatrix)
-    Δ = DensityMatrix(Δ, nqubits(y))
+function back_propagate(Δ::DensityMatrix, m::Gate, y::DensityMatrix)
     Δ = apply!(m', Δ)
     y = apply!(m', y)
     ∇θs = nothing
     if nparameters(m) > 0
         ∇θs = [real(expectation(y, item, Δ) + expectation(Δ, item', y)) for item in differentiate(m)]
     end
-    return storage(Δ), ∇θs, y
+    return Δ, ∇θs, y
 end
 
-function back_propagate(Δ::AbstractMatrix, m::QuantumMap, y::DensityMatrix)
-    Δ = DensityMatrix(Δ, nqubits(y))
+function back_propagate(Δ::DensityMatrix, m::QuantumMap, y::DensityMatrix)
     Δ = apply_dagger!(m, Δ)
     y = apply_inverse!(m, y)
     ∇θs = nothing
-    return storage(Δ), ∇θs, y
+    return Δ, ∇θs, y
 end
 
 function back_propagate_util(Δ, circuit::QCircuit, y)
@@ -74,8 +71,8 @@ function back_propagate_util(Δ, circuit::QCircuit, y)
     return Δ, ∇θs_all, y
 end
 
-back_propagate(Δ::AbstractVector, circuit::QCircuit, y::StateVector) = back_propagate_util(Δ, circuit, y)
-back_propagate(Δ::AbstractMatrix, circuit::QCircuit, y::DensityMatrix) = back_propagate_util(Δ, circuit, y)
+back_propagate(Δ::StateVector, circuit::QCircuit, y::StateVector) = back_propagate_util(Δ, circuit, y)
+back_propagate(Δ::DensityMatrix, circuit::QCircuit, y::DensityMatrix) = back_propagate_util(Δ, circuit, y)
  
  
 

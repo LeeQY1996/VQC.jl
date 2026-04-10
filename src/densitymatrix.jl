@@ -13,6 +13,12 @@ function DensityMatrix{T}(m::AbstractMatrix{<:Number}, nqubits::Int) where {T <:
 	(size(m, 1) == size(m, 2) == 2^nqubits) || throw(DimensionMismatch())
 	return DensityMatrix{T}(reshape(m, length(m)), nqubits)
 end
+function DensityMatrix{T}(m::AbstractVector{<:Number}) where {T <: Number}
+	n = _nqubits(m)
+	return DensityMatrix{T}(m, div(n, 2))
+end
+DensityMatrix{T}(m::AbstractMatrix{<:Number}) where {T <: Number} = DensityMatrix{T}(reshape(m, length(m)))
+
 DensityMatrix(data::Union{AbstractVector, AbstractMatrix}, nqubits::Int) = DensityMatrix{eltype(data)}(data, nqubits)
 DensityMatrix(data::AbstractVector) = DensityMatrix(data, div(_nqubits(data), 2))
 DensityMatrix(data::AbstractMatrix) = DensityMatrix(reshape(data, length(data)))

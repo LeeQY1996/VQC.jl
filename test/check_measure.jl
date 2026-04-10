@@ -48,7 +48,7 @@ function check_select_grad()
 	loss_fd(θs) = loss(StateVector(θs))
 
 	x = rand_state(ComplexF64, 3)
-	grad1 = gradient(loss, x)[1]
+	grad1 = storage(gradient(loss, x)[1])
 	grad2 = fdm_gradient(loss_fd, storage(x))
 	return maximum(abs.(grad1 - grad2)) < 1.0e-6
 end

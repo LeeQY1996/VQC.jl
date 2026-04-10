@@ -7,7 +7,7 @@ using Zygote: @adjoint
 
 using LinearAlgebra, StaticArrays, QuantumCircuits, QuantumCircuits.Gates
 using QuantumCircuits: permute
-import LinearAlgebra, QuantumCircuits
+# import LinearAlgebra, QuantumCircuits
 
 # using KrylovKit: exponentiate
 # using SparseArrays: spzeros, sparse, SparseMatrixCSC

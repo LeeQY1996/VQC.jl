@@ -52,6 +52,7 @@ Base.:*(m::AbstractMatrix, x::StateVector) = StateVector( m * storage(x), nqubit
 
 LinearAlgebra.norm(x::StateVector) = norm(storage(x))
 LinearAlgebra.dot(x::StateVector, y::StateVector) = dot(storage(x), storage(y))
+LinearAlgebra.dot(x::StateVector, m::AbstractVector, y::StateVector) = dot(storage(x), m, storage(y))
 LinearAlgebra.normalize!(x::StateVector) = (normalize!(storage(x)); x)
 LinearAlgebra.normalize(x::StateVector) = StateVector(normalize(storage(x)), nqubits(x))
 

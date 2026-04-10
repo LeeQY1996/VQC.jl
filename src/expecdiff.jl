@@ -3,7 +3,7 @@
 
 function _qterm_expec_util(m::QubitsTerm, state::StateVector)
 	if length(positions(m)) <= LARGEST_SUPPORTED_NTERMS
-	    return expectation(m, state), z -> (nothing, storage( (conj(z) * m + z * m') * state ) )
+	    return expectation(m, state), z -> (nothing, (conj(z) * m + z * m') * state ) 
 	else
 		v = m * state
 		return dot(state, v), z -> begin
@@ -12,7 +12,7 @@ function _qterm_expec_util(m::QubitsTerm, state::StateVector)
 		   _apply_qterm_util!(m1, storage(state), storage(v))
 		   v2 = storage( m2 * state )
 		   v2 .+= storage(v)
-		   return (nothing, v2)
+		   return (nothing, StateVector(v2, nqubits(state)))
 		end
 	end
 end
@@ -22,16 +22,16 @@ end
 # 	nothing,  storage((conj(z) * m + z * m') *  DensityMatrix(one(storage(state)), nqubits(state)))  )
 
 _qterm_expec_util(m::QubitsTerm, state::DensityMatrix) = expectation(m, state), z -> (
-	nothing,  storage((z * m') *  DensityMatrix(one(storage(state)), nqubits(state)))  )
+			nothing,  (z * m') *  DensityMatrix(one(storage(state)), nqubits(state)))  
 
 
 @adjoint expectation(m::QubitsTerm, state::Union{StateVector, DensityMatrix}) = _qterm_expec_util(m, state)
 
-function _qop_expec_util(m::QubitsOperator, state::StateVector)
+function _qop_expec_util(m::QubitsOperator, state_in::StateVector)
 	if _largest_nterm(m) <= LARGEST_SUPPORTED_NTERMS
-		return expectation(m, state), z -> (nothing, storage( (conj(z) * m + z * m') * state ) )
+		return expectation(m, state_in), z -> (nothing, (conj(z) * m + z * m') * state_in ) 
 	else
-		state = storage(state)
+		state = storage(state_in)
 		workspace = similar(state)
 		state_2 = zeros(eltype(state), length(state))
 		for (k, v) in m.data
@@ -54,7 +54,7 @@ function _qop_expec_util(m::QubitsOperator, state::StateVector)
 		    		end
 		    	end
 			end
-		    return (nothing, state_2)    
+		    return (nothing, StateVector(state_2, nqubits(state_in)))
 		end
 	end	
 end
@@ -62,7 +62,7 @@ end
 # 	nothing, storage( (conj(z) * m + z * m') * DensityMatrix(one(storage(state)), nqubits(state)) ) )
 
 _qop_expec_util(m::QubitsOperator, state::DensityMatrix) = expectation(m, state), z -> (
-	nothing, storage( (z * m') * DensityMatrix(one(storage(state)), nqubits(state)) ) )
+	nothing,  (z * m') * DensityMatrix(one(storage(state)), nqubits(state)) ) 
 
 
 @adjoint expectation(m::QubitsOperator, state::Union{StateVector, DensityMatrix}) = _qop_expec_util(m, state)
