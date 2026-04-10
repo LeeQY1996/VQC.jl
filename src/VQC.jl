@@ -10,7 +10,7 @@ using QuantumCircuits: permute
 # import LinearAlgebra, QuantumCircuits
 
 # Re-export commonly used functions from QuantumCircuits
-using QuantumCircuits: spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable
+using QuantumCircuits: spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable, gate
 
 # Re-export common gates from QuantumCircuits.Gates
 using QuantumCircuits.Gates: H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz, U1, U2, U3
@@ -40,7 +40,7 @@ export H, X, Y, Z, S, T, CNOT, CZ, SWAP, Rx, Ry, Rz, U1, U2, U3
 export HGate, XGate, YGate, ZGate, SGate, TGate, CNOTGate, CZGate, SWAPGate, RxGate, RyGate, RzGate, CRxGate, CRyGate, CRzGate
 
 # Hamiltonian and operator functions
-export spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable
+export spin_half, boson, Hamiltonian, Observers, spin_half_state, fock_state, Variable, gate
 
 # utility functions
 export variational_circuit_1d, real_variational_circuit_1d
