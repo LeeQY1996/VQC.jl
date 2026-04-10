@@ -22,13 +22,13 @@ jobs:
       - name: Clone QuantumCircuits dependency
         run: |
           cd ..
-          git clone --depth 1 https://x-access-token:${{ github.token }}@github.com/guochu/QuantumCircuits.jl.git
+          git clone --depth 1 https://x-access-token:${{ github.token }}@github.com/LeeQY1996/QuantumCircuits.git
 
       - name: Install dependencies
         run: |
           julia --project=. -e '
             using Pkg
-            Pkg.develop(PackageSpec(path="../QuantumCircuits.jl"))
+            Pkg.develop(PackageSpec(path="../QuantumCircuits"))
             Pkg.instantiate()
             Pkg.add("Documenter")
           '
